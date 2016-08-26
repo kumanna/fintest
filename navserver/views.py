@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse, Http404, JsonResponse
+from django.template import loader
 
 from .models import MutualFund, MutualFundNAV
 
@@ -17,3 +18,11 @@ def navjson(request, amfisymbol, startdate, enddate):
     enddate = hyphenate_date(enddate)
     nav_values = mf.nav.filter(date__range = (startdate, enddate))
     return JsonResponse(list(nav_values.values('date', 'nav')), safe=False)
+
+def navview(request, amfisymbol, startdate, enddate):
+    template = loader.get_template('navserver/navview.html')
+    context = {
+        'amfisymbol' : amfisymbol,
+        'startdate' : startdate,
+        'enddate' : enddate,}
+    return HttpResponse(template.render(context, request))
