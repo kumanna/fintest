@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+ <lang="en">
+    <meta charset="UTF-8">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/metrics-graphics/2.6.0/metricsgraphics.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/metrics-graphics/2.6.0/metricsgraphics.css">
+    <style>
+        @import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro);
+
+        body {
+            font-family: 'Source Sans Pro';
+        }
+
+        html {
+            font-size: 1em;
+        }
+    </style>
+</head>
+<body>
+  <div id="chart"></div>
+
+  <p></p>
+   <script> 
+     d3.json('{% url 'navserver:navjson' amfisymbol startdate enddate %}', function(data) { 
+         data = MG.convert.date(data, 'date'); 
+         MG.data_graphic({ 
+             title: "NAV", 
+             description: "My NAV", 
+             data: data, 
+             width: 600, 
+             height: 375, 
+             target: "#chart", 
+             x_accessor: "date", 
+             y_accessor: "nav", 
+             interpolate: "monotone" 
+         }); 
+     }); 
+    </script> 
+</body>
+</html>
