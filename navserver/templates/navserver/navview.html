@@ -21,8 +21,6 @@
 </head>
 <body>
   <div id="chart"></div>
-
-  <p></p>
    <script> 
      d3.json('{% url 'navserver:navjson' amfisymbol startdate enddate %}', function(data) { 
          data = MG.convert.date(data, 'date'); 
