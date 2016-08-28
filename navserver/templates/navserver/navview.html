@@ -21,23 +21,33 @@
 </head>
 <body>
   <div id="chart"></div>
-   <script> 
+   <script>
      makechart = function(charturl, chartid) {
-     d3.json(charturl, function(data) { 
-         data = MG.convert.date(data, 'date'); 
-         MG.data_graphic({ 
-             title: "NAV", 
-             description: "My NAV", 
-             data: data, 
-             width: 600, 
-             height: 375, 
+     d3.json(charturl, function(data) {
+         data = MG.convert.date(data, 'date');
+         data = MG.convert.number(data, 'nav');
+         MG.data_graphic({
+             title: "NAV",
+             description: "My NAV",
+             data: data,
+             width: 600,
+             height: 375,
              target: "#" + chartid,
-             x_accessor: "date", 
-             y_accessor: "nav"
+             x_accessor: "date",
+             y_accessor: "nav",
          });
-     }); 
+     });
      };
      makechart('{% url 'navserver:navjson' amfisymbol startdate enddate %}', "chart");
-    </script> 
+    </script>
+    <h3>Past returns</h2>
+    <ul>
+      <li><a href="javascript:makechart('/navserver/json/{{ amfisymbol }}/20150814-20160814/', 'chart')">1 year</a></li>
+      <li><a href="javascript:makechart('/navserver/json/{{ amfisymbol }}/20140814-20160814/', 'chart')">2 years</a></li>
+      <li><a href="javascript:makechart('/navserver/json/{{ amfisymbol }}/20130814-20160814/', 'chart')">3 years</a></li>
+      <li><a href="javascript:makechart('/navserver/json/{{ amfisymbol }}/20120814-20160814/', 'chart')">4 years</a></li>
+      <li><a href="javascript:makechart('/navserver/json/{{ amfisymbol }}/20110814-20160814/', 'chart')">5 years</a></li>
+      <li><a href="javascript:makechart('/navserver/json/{{ amfisymbol }}/20100814-20160814/', 'chart')">6 years</a></li>
+    </ul>
 </body>
 </html>
