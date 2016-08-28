@@ -18,8 +18,10 @@
             font-size: 1em;
         }
     </style>
+    <title>Performance of {{ mfname }}</title>
 </head>
 <body>
+  <h1>Performance of {{ mfname }}</h1>
   <div id="chart"></div>
    <script>
      makechart = function(charturl, chartid) {
@@ -27,14 +29,16 @@
          data = MG.convert.date(data, 'date');
          data = MG.convert.number(data, 'nav');
          MG.data_graphic({
-             title: "NAV",
-             description: "My NAV",
+             title: "Performance of {{ mfname }} ",
+             description: "NAV of {{ mfname }}",
              data: data,
              width: 600,
              height: 375,
              target: "#" + chartid,
              x_accessor: "date",
              y_accessor: "nav",
+	     area: false,
+	     transition_on_update: false,
          });
      });
      };

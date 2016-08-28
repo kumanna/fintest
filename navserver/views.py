@@ -20,9 +20,14 @@ def navjson(request, amfisymbol, startdate, enddate):
     return JsonResponse(list(nav_values.values('date', 'nav')), safe=False)
 
 def navview(request, amfisymbol, startdate, enddate):
+    try:
+        mf = MutualFund.objects.get(amfisymbol=amfisymbol)
+    except:
+        raise Http404("MF does not exist!")
     template = loader.get_template('navserver/navview.html')
     context = {
         'amfisymbol' : amfisymbol,
+	'mfname' : mf.mfname,
         'startdate' : startdate,
         'enddate' : enddate,}
     return HttpResponse(template.render(context, request))
