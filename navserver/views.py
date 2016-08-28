@@ -5,7 +5,14 @@ from django.template import loader
 from .models import MutualFund, MutualFundNAV
 
 def index(request):
-    return HttpResponse("Hello, world. You're at the NAV server index.")
+    mflist = MutualFund.objects.order_by('-mfname')
+    template = loader.get_template('navserver/index.html')
+    context = {
+        'mflist': mflist,
+	'startdate': '20150814',
+	'enddate': '20160814',
+    }
+    return HttpResponse(template.render(context, request))
 
 def navjson(request, amfisymbol, startdate, enddate):
     try:

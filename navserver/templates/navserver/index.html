@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        @import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro);
+
+        body {
+            font-family: 'Source Sans Pro';
+        }
+
+        html {
+            font-size: 1em;
+        }
+    </style>
+    <title>NAV analyzer</title>
+</head>
+<body>
+  <h1>NAV analyzer</h1>
+{% if mflist %}
+  <p>We currently track the following mutual funds:</p>
+  <ul>
+    {% for mf in mflist %}
+    <li><a href="{% url 'navserver:navview' mf.amfisymbol startdate enddate %}">{{ mf.mfname }}</a></li>
+    {% endfor %}
+  </ul>
+{% endif %}
+</body>
+</html>
