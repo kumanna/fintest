@@ -2,6 +2,7 @@ from django.db import models
 
 class MutualFund(models.Model):
     amfisymbol = models.CharField(max_length=10, unique=True)
+    mfname = models.CharField(max_length=300,default='Unnamed MF')
 
     def __str__(self):
         return self.amfisymbol
