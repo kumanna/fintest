@@ -22,7 +22,8 @@
 <body>
   <div id="chart"></div>
    <script> 
-     d3.json('{% url 'navserver:navjson' amfisymbol startdate enddate %}', function(data) { 
+     makechart = function(charturl, chartid) {
+     d3.json(charturl, function(data) { 
          data = MG.convert.date(data, 'date'); 
          MG.data_graphic({ 
              title: "NAV", 
@@ -30,11 +31,13 @@
              data: data, 
              width: 600, 
              height: 375, 
-             target: "#chart", 
+             target: "#" + chartid,
              x_accessor: "date", 
              y_accessor: "nav"
          });
      }); 
+     };
+     makechart('{% url 'navserver:navjson' amfisymbol startdate enddate %}', "chart");
     </script> 
 </body>
 </html>
