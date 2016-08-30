@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://d3js.org/d3.v4.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/metrics-graphics/2.10.1/metricsgraphics.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/metrics-graphics/2.10.1/metricsgraphics.css"
+    rel="stylesheet" type="text/css"/>
+    <style>
+        @import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro);
+
+        body {
+            font-family: 'Source Sans Pro';
+        }
+
+        html {
+            font-size: 1em;
+        }
+    </style>
+    <title></title>
+</head>
+<body>
+  <h1>Growth of Rs. 10,000 in {{ mfname1 }} and {{ mfname2 }}</h1>
+  <div id="chart"></div>
+   <script>
+     makechart = function(charturl, chartid) {
+     d3.json(charturl, function(data) {
+     for (var i = 0; i < data.length; i++) {
+         data[i] = MG.convert.date(data[i], 'date');
+         data[i] = MG.convert.number(data[i], 'value');
+     }
+         MG.data_graphic({
+             title: "Performance of {{ mfname1 }}, {{ mfname2 }} ",
+             description: "NAV of {{ mfname }}",
+             data: data,
+             width: 600,
+             height: 375,
+             right: 40,
+	     legend: ['{{ mfname1 }}', '{{ mfname2 }}'],
+             legend_target: 'div#mylegend',
+             target: "#" + chartid,
+             x_accessor: "date",
+             y_accessor: "value",
+	     area: false,
+	     transition_on_update: false,
+         });
+     });
+     };
+     makechart('{% url 'navserver:lumpsumcompare' amfisymbol1 amfisymbol2 startdate enddate %}', "chart");
+    </script>
+   <div id="mylegend"></div>
+    <h3>Past returns</h2>
+    <ul>
+      <li><a href="javascript:makechart('/navserver/json/{{ amfisymbol1 }},{{ amfisymbol2 }}/20150814-20160814/', 'chart')">1 year</a></li>
+      <li><a href="javascript:makechart('/navserver/json/{{ amfisymbol1 }},{{ amfisymbol2 }}/20140814-20160814/', 'chart')">2 years</a></li>
+      <li><a href="javascript:makechart('/navserver/json/{{ amfisymbol1 }},{{ amfisymbol2 }}/20130814-20160814/', 'chart')">3 years</a></li>
+      <li><a href="javascript:makechart('/navserver/json/{{ amfisymbol1 }},{{ amfisymbol2 }}/20120814-20160814/', 'chart')">4 years</a></li>
+      <li><a href="javascript:makechart('/navserver/json/{{ amfisymbol1 }},{{ amfisymbol2 }}/20110814-20160814/', 'chart')">5 years</a></li>
+      <li><a href="javascript:makechart('/navserver/json/{{ amfisymbol1 }},{{ amfisymbol2 }}/20100814-20160814/', 'chart')">6 years</a></li>
+    </ul>
+</body>
+</html>
