@@ -14,7 +14,7 @@ def index(request):
     }
     return HttpResponse(template.render(context, request))
 
-def navjson(request, amfisymbol, startdate, enddate):
+def navlist(amfisymbol, startdate, enddate):
     try:
         mf = MutualFund.objects.get(amfisymbol=amfisymbol)
     except:
@@ -24,7 +24,10 @@ def navjson(request, amfisymbol, startdate, enddate):
     startdate = hyphenate_date(startdate)
     enddate = hyphenate_date(enddate)
     nav_values = mf.nav.filter(date__range = (startdate, enddate))
-    return JsonResponse(list(nav_values.values('date', 'nav')), safe=False)
+    return list(nav_values.values('date', 'nav'))
+
+def navjson(request, amfisymbol, startdate, enddate):
+    return JsonResponse(navlist(amfisymbol, startdate, enddate), safe=False)
 
 def navview(request, amfisymbol, startdate, enddate):
     try:
