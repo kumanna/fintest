@@ -9,8 +9,8 @@ def index(request):
     template = loader.get_template('navserver/index.html')
     context = {
         'mflist': mflist,
-	'startdate': '20150814',
-	'enddate': '20160814',
+        'startdate': '20150814',
+        'enddate': '20160814',
     }
     return HttpResponse(template.render(context, request))
 
@@ -34,7 +34,7 @@ def navview(request, amfisymbol, startdate, enddate):
     template = loader.get_template('navserver/navview.html')
     context = {
         'amfisymbol' : amfisymbol,
-	'mfname' : mf.mfname,
+        'mfname' : mf.mfname,
         'startdate' : startdate,
         'enddate' : enddate,}
     return HttpResponse(template.render(context, request))
